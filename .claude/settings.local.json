@@ -3,7 +3,17 @@
     "allow": [
       "PowerShell(Start-Sleep -Seconds 15; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -UseBasicParsing -TimeoutSec 5; \"Frontend OK: \" + $r.StatusCode } catch { \"Still starting...\" })",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(C:/Users/user/AppData/Local/Python/bin/python3.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000)",
+      "Bash(C:/Users/user/AppData/Local/Python/bin/python3.exe -c \"from app.main import app; print\\('OK'\\)\")",
+      "Bash(C:/Users/user/AppData/Local/Python/bin/python3.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-access-log)",
+      "Bash(ping -n 4 127.0.0.1)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":8000\")",
+      "Bash(tasklist /FI \"PID eq 26940\")",
+      "Bash(C:/Users/user/AppData/Local/Python/bin/python3.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload)",
+      "Bash(powershell -Command \"Start-Sleep -Seconds 3\")",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
