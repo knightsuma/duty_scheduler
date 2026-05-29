@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+
+  # ── MariaDB ──────────────────────────────────
+  db:
+    image: mariadb:11
+    container_name: duty_db
+    restart: always
+    env_file: .env.prod
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE:      ${MYSQL_DATABASE}
+      MYSQL_USER:          ${MYSQL_USER}
+      MYSQL_PASSWORD:      ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - duty_net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ── FastAPI Backend ───────────────────────────
+  backend:
+    build: ./backend
+    container_name: duty_backend
+    restart: always
+    env_file: .env.prod
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - duty_net
+
+  # ── React Frontend (Nginx) ────────────────────
+  frontend:
+    build: ./frontend
+    container_name: duty_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - duty_net
+
+volumes:
+  db_data:
+
+networks:
+  duty_net:
+    driver: bridge

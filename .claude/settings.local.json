@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Sleep -Seconds 15; try { $r = Invoke-WebRequest -Uri \"http://localhost:5173\" -UseBasicParsing -TimeoutSec 5; \"Frontend OK: \" + $r.StatusCode } catch { \"Still starting...\" })",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
